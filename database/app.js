@@ -133,3 +133,20 @@ app.post('/employees', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+//add new task
+app.post('/tasks', async (req, res) => {
+    try {
+      const task = await Task.create({
+        description: req.body.description,
+        priority: req.body.priority,
+        status: false,
+        employeeId: req.body.employeeId
+      });
+  
+      return res.status(201).json(task);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
