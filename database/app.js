@@ -3,6 +3,7 @@ const Employees = require('./models/Employees');
 const Tasks = require('./models/Tasks');
 
 const app = express();
+app.use(express.json());
 
 app.get('/employees', async (req, res) => {
     try {
@@ -23,4 +24,26 @@ app.get('/tasks', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
+  //find single employee based on their id
+  app.put('/employees/:id', async (req, res) => {
+    try {
+      const employee = await Employees.findOne({ where: { id: req.params.id } });
+      
+      if (!employee) {
+        return res.status(404).send('Employee not found');
+      }
   
+      // Update the employee record with the new data
+      const updatedEmployee = await employee.update({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        department: req.body.department
+      });
+  
+      return res.status(200).json(updatedEmployee);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
