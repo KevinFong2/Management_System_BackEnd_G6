@@ -5,6 +5,7 @@ const Tasks = require('./models/Tasks');
 const app = express();
 app.use(express.json());
 
+//get all employees
 app.get('/employees', async (req, res) => {
     try {
       const employees = await Employees.findAll();
@@ -15,6 +16,7 @@ app.get('/employees', async (req, res) => {
     }
 }); 
 
+//get all tasks
 app.get('/tasks', async (req, res) => {
     try {
       const tasks = await Tasks.findAll();
@@ -110,6 +112,22 @@ app.put('/tasks/:id', async (req, res) => {
       });
   
       return res.status(200).json(editedTask);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+//add new employee
+app.post('/employees', async (req, res) => {
+    try {
+      const newEmployee = await Employees.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        department: req.body.department
+      });
+  
+      return res.status(201).json(newEmployee);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
