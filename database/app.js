@@ -12,4 +12,15 @@ app.get('/employees', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  }); 
+}); 
+
+app.get('/tasks', async (req, res) => {
+    try {
+      const tasks = await Tasks.findAll();
+      res.status(200).json(tasks);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
