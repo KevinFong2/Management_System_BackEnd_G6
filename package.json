@@ -2,20 +2,20 @@
   "name": "employee_management_backendg6",
   "version": "1.0.0",
   "description": "backend for final",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KevinFong2/employee_management_backEndG6.git"
+    "url": "git+https://github.com/KevinFong2/Management_System_BackEnd_G6.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KevinFong2/employee_management_backEndG6/issues"
+    "url": "https://github.com/KevinFong2/Management_System_BackEnd_G6/issues"
   },
-  "homepage": "https://github.com/KevinFong2/employee_management_backEndG6#readme",
+  "homepage": "https://github.com/KevinFong2/Management_System_BackEnd_G6#readme",
   "dependencies": {
     "express": "^4.18.2",
     "pg": "^8.10.0",
