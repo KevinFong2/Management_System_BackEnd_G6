@@ -150,3 +150,21 @@ app.post('/tasks', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+//delete employee
+app.delete('/employees/:id', async (req, res) => {
+    try {
+      const employee = await Employees.findOne({ where: { id: req.params.id } });
+  
+      if (!employee) {
+        return res.status(404).send('Employee not found');
+      }
+  
+      await employee.destroy();
+  
+      return res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
