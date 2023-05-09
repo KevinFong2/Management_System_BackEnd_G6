@@ -23,10 +23,10 @@ app.get('/tasks', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  });
+});
 
-  //find single employee based on their id
-  app.put('/employees/:id', async (req, res) => {
+//find single employee based on their id
+app.put('/employees/:id', async (req, res) => {
     try {
       const employee = await Employees.findOne({ where: { id: req.params.id } });
       
@@ -46,10 +46,10 @@ app.get('/tasks', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  });
+});
 
-  //find single task based on their id
-  app.get('/tasks/:id', async (req, res) => {
+//find single task based on their id
+app.get('/tasks/:id', async (req, res) => {
     try {
       const task = await Tasks.findOne({
         where: { id: req.params.id },
@@ -68,4 +68,50 @@ app.get('/tasks', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  });
+});
+
+//edit employee
+app.put('/employees/:id', async (req, res) => {
+    try {
+      const employee = await Employees.findOne({ where: { id: req.params.id } });
+      
+      if (!employee) {
+        return res.status(404).send('Employee not found');
+      }
+  
+      const editedEmployee = await employee.update({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        department: req.body.department
+      });
+  
+      return res.status(200).json(editedEmployee);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+//edit task
+app.put('/tasks/:id', async (req, res) => {
+    try {
+      const task = await Tasks.findOne({ where: { id: req.params.id } });
+  
+      if (!task) {
+        return res.status(404).send('Task not found');
+      }
+  
+      // Update the task record with the new data
+      const editedTask = await task.update({
+        description: req.body.description,
+        priority: req.body.priority,
+        status: req.body.status,
+        employeeId: req.body.employeeId
+      });
+  
+      return res.status(200).json(editedTask);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
