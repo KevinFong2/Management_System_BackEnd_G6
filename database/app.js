@@ -47,3 +47,25 @@ app.get('/tasks', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
+  //find single task based on their id
+  app.get('/tasks/:id', async (req, res) => {
+    try {
+      const task = await Tasks.findOne({
+        where: { id: req.params.id },
+        include: [{
+          model: Employees,
+          as: 'assignedTo'
+        }]
+      });
+  
+      if (!task) {
+        return res.status(404).send('Task not found');
+      }
+  
+      return res.status(200).json(task);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
