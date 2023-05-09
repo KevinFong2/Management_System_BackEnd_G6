@@ -21,4 +21,8 @@ const Task = sequelize.define('Task', {
   }
 });
 
+Task.belongsTo(Employee, { as: 'assignedTo', foreignKey: 'employeeId' });
+Employee.hasMany(Task, { as: 'tasks', foreignKey: 'employeeId' });
+
+
 module.exports = Task;
