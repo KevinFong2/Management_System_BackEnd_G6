@@ -168,3 +168,23 @@ app.delete('/employees/:id', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+//delete task
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+      const task = await Tasks.findOne({ where: { id: req.params.id } });
+  
+      if (!task) {
+        return res.status(404).send('Task not found');
+      }
+  
+      await task.destroy();
+  
+      return res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+app.listen(3000, () => console.log('Server started on port 3000'));
