@@ -1,6 +1,8 @@
 const express = require('express');
-const Employees = require('./models/Employees');
-const Tasks = require('./models/Tasks');
+const Employees = require('./database/models/Employees');
+const Tasks = require('./database/models/Tasks');
+const db = require('./database/db/index');
+const cors = require('cors')
 
 const app = express();
 app.use(express.json());
@@ -183,4 +185,36 @@ app.delete('/tasks/:id', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server started on port 3000'));
+const configureApp = async () => {
+  app.use(cors());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.get('/favicon.ico', (req, res) => res.status(204));
+
+  app.get("", (request, response) => {
+    response.send("Welcome to the database!. Please use the following routes: /employees, /tasks")
+  });
+
+  app.use((req, res, next) => {
+    const error = new Error("Not Found, Please Check URL!");
+    error.status = 404;
+    next(error);
+  });
+
+  app.use((err, req, res, next) => {
+    console.error(err);
+    console.log(req.originalUrl);
+    res.status(err.status || 500).send(err.message || "Internal server error.");
+  });
+
+};
+
+const bootApp = async () => {
+  await configureApp();
+};
+
+bootApp();
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
