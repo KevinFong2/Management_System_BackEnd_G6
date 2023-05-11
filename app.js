@@ -193,7 +193,7 @@ const configureApp = async () => {
   app.get('/favicon.ico', (req, res) => res.status(204));
 
   app.get("", (request, response) => {
-    response.send("Welcome to the database!. Please use the following routes: /employees, /tasks")
+    response.send("Welcome to the database! Please use the following routes: /employees, /tasks")
   });
 
   app.use((req, res, next) => {
