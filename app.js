@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //get all employees
 app.get('/employees', async (req, res) => {
