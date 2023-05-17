@@ -136,7 +136,7 @@ app.post('/employees', async (req, res) => {
 //add new task
 app.post('/tasks', async (req, res) => {
     try {
-      const task = await Task.create({
+      const task = await Tasks.create({
         description: req.body.description,
         priority: req.body.priority,
         status: false,
